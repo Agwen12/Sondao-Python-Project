@@ -1,12 +1,15 @@
 from dataclasses import dataclass, field
-from typing import List, TypeVar
+from typing import TypeVar
 from datetime import date
 from abc import ABC, abstractmethod
+from collections import namedtuple
 
 from PersonalInfo import PersonalInfo
 from RelationTypes import RelationTypes as RT
 
 PersonObject = TypeVar("PersonObject")
+Spouse = namedtuple("Spouse", ["person", "relation"])
+
 
 @dataclass
 class GenericPerson(ABC):
@@ -43,11 +46,11 @@ class Person(GenericPerson):
 
 @dataclass
 class Testator(Person):
-    spouse: list[GenericPerson] = field(default_factory=lambda: list())
+    spouse: list[Spouse] = field(default_factory=lambda: list())
 
     def add_relative(self, relative: Person, relation_type: RT):
         if not super().add_relative(relative, relation_type):
-            self.spouse.append(relative)
+            self.spouse.append(Spouse(relative, relation_type))
 
 
 @dataclass

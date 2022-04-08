@@ -1,6 +1,6 @@
 from enum import Enum, auto
 
-
+#TODO DO PRZEMYSLENIA, MOZE ZREZYGNOWAC Z ENUMA I ROBIC STRINGI
 class DocumentType(Enum):  # TODO WAIT FOR INFO ABOUT OTHER
     DEATH_CERTIFICATE = auto()
     BIRTH_CERTIFICATE = auto()

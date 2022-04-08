@@ -19,9 +19,9 @@ class PersonalInfo:  # TODO WAIT FOR OTHER DOCS
     phone_number: str
     home_address: str
     birthday: date
-    is_dead: bool = False
-    documents: dict[DocumentType: Document] = field(default_factory=lambda: dict.fromkeys(list(DocumentType)))
+    documents: dict[DocumentType: Document] = field(default_factory=lambda: dict.fromkeys(list(DocumentType))) #TODO LISTA MOZE, NP 2 akty slubu
 
 
 class RelativesInfo(PersonalInfo):
+    want_inherit: bool = True
     supposed_death_notification: date = None

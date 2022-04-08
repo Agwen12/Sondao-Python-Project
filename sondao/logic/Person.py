@@ -10,7 +10,7 @@ from RelationTypes import RelationTypes as RT
 PersonObject = TypeVar("PersonObject")
 Spouse = namedtuple("Spouse", ["person", "relation"])
 
-
+#TODO TYPEVAR NIE MA SENSU UZYC KALSY KTORA NIC NIE ROBI. MOZNA TEZ ZREZYGNOWAC Z TYPINGU TUTAJ TYPOWO
 @dataclass
 class GenericPerson(ABC):
     personal_info: PersonalInfo

@@ -1,0 +1,8 @@
+---
+--- RUN SERVER
+---
+python manage.py runserver
+
+---
+---
+---

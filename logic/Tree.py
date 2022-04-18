@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from datetime import date
 from Person import Testator
 import networkx as nx
-
+from pyvis.network import Network
 
 #TODO SEE WHATS MORE
 @dataclass
@@ -15,6 +15,8 @@ class Tree:
         # ADD ROOT FOR GRAPH
         self.graph.add_node(self.next_node_num)
         self.next_node_num += 1
+
+
 
 
     def draw(self): #TODO write drawing

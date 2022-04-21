@@ -12,3 +12,5 @@ django-admin startproject sondao_web
 --- CREATE APP
 ---
 python manage.py startapp app_name
+
+https://docs.djangoproject.com/pl/4.0/intro/tutorial02/

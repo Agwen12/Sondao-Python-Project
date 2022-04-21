@@ -1,0 +1,14 @@
+---
+--- RUN SERVER
+---
+python manage.py runserver
+
+---
+---START PROJECT
+---
+django-admin startproject sondao_web
+
+---
+--- CREATE APP
+---
+python manage.py startapp app_name

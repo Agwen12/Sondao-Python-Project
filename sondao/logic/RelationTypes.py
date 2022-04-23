@@ -7,6 +7,8 @@ class RelationTypes(Enum):
     PARTIAL_ADOPTED_CHILD = auto()
     SIBLING = auto()
     PARENT = auto()
+    FULL_ADOPTED_PARENT = auto()
+    PARTIAL_ADOPTED_PARENT = auto()
     SPOUSE = auto()
     EX_SPOUSE = auto()
 

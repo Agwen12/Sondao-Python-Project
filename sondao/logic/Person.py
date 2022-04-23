@@ -55,5 +55,6 @@ class Testator(Person):
 
 @dataclass
 class Relative(Person):
-    mail_sent: date = None
-    mail_received: date = None
+    pass
+    # mail_sent: date = None
+    # mail_received: date = None

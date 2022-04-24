@@ -4,7 +4,7 @@
 python manage.py runserver
 
 ---
----START PROJECT
+--- START PROJECT
 ---
 django-admin startproject sondao_web
 
@@ -14,3 +14,13 @@ django-admin startproject sondao_web
 python manage.py startapp app_name
 
 https://docs.djangoproject.com/pl/4.0/intro/tutorial02/
+
+---
+--- MIGRATE
+---
+python manage.py migrate
+
+--
+-- MAKE MIGRATIONS
+--
+python manage.py makemigrations

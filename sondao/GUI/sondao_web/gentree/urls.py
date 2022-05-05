@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import home, get_name
+from .views import home, person_form
 
 urlpatterns = [
     path("", home, name="home"),
-    path("form", get_name, name="get_name"),
+    path("form", person_form, name="person_form"),
 ]

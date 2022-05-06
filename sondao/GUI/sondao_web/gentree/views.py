@@ -1,16 +1,35 @@
-import networkx as nx
-import pyvis.network
-import datetime
-
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import Person, Relation
 from pyvis.network import Network
 from sondao.logic.RelationTypes import RelationTypes
+from .forms import PersonForm
+from .models import Person
 
+import networkx as nx
+import pyvis.network
+import datetime
 
+def person_form(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = PersonForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.name = form.cleaned_data['name']
+            post.surname = form.cleaned_data['surname']
+            post.save()
+            return HttpResponseRedirect('/')
 
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = PersonForm()
 
+    return render(request, 'form.html', {'form': form})
+  
+  
 def home(request):
     menager = Person.objects
     items = menager.all()

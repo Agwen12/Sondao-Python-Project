@@ -13,11 +13,6 @@ class RelationTypes(Enum):
     SPOUSE = auto()
     EX_SPOUSE = auto()
 
-    @classmethod
-    def choices(cls):
-        print(tuple((i.name, i.value) for i in cls))
-        return tuple((i.name, i.value) for i in cls)
-
 ## definie niezwłocznie
 # data wpływu
 # prawomocnosci

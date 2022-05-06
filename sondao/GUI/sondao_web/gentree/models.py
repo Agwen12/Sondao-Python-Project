@@ -34,6 +34,8 @@ class Document(models.Model):
 
 
 class Relation(models.Model):
+    relation_types = [(x.value, RelationTypes(x.value)) for x in RelationTypes]
+
     first_relative = models.ForeignKey(Person, on_delete=models.CASCADE, related_name="first_relative")
     second_relative = models.ForeignKey(Person, on_delete=models.CASCADE, related_name="second_relative")
-    relation = models.CharField("Document type", max_length=30, choices=RelationTypes.choices())
+    relation = models.CharField("Document type", max_length=30, choices=relation_types)

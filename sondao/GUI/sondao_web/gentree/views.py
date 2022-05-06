@@ -33,7 +33,8 @@ def home(request):
 
 
 
-    nt = Network()
+    nt = Network(600, 1700)
+    nt.set_template("gentree\\templates\\template.html")
     nt.from_nx(graph)
     nt.set_options("""var options = {
       "edges": {

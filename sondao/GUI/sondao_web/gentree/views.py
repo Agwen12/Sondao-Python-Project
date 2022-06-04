@@ -5,10 +5,24 @@ from pyvis.network import Network
 from sondao.logic.RelationTypes import RelationTypes
 from .forms import PersonForm
 from .models import Person
-
+from django.views.generic import TemplateView
 import networkx as nx
+import os
 import pyvis.network
 import datetime
+
+from bootstrap_modal_forms.generic import BSModalCreateView
+from django.urls import reverse_lazy
+
+
+class PersonAddView(BSModalCreateView):
+    template_name = 'add_person_form.html'
+    form_class = PersonForm
+    success_message = 'Success: Person was created.'
+    success_url = reverse_lazy('home')
+
+class Index(TemplateView):
+    template_name = 'index2.html'
 
 def person_form(request):
     # if this is a POST request we need to process the form data
@@ -27,19 +41,18 @@ def person_form(request):
     else:
         form = PersonForm()
 
-    return render(request, 'form.html', {'form': form})
-  
-  
+    return render(request, 'add_person_form.html', {'form': form})
+
+
 def home(request):
     menager = Person.objects
     items = menager.all()
     graph = nx.Graph()
     for item in items.values():
         graph.add_node(item['id'],
-                       label=(item['name']+ " "+ item['surname']),
+                       label=(item['name'] + " " + item['surname']),
                        physics=False,
                        shape="box")
-
 
     # p = Relation(first_relative_id=1, second_relative_id=2, relation=RelationTypes.CHILD)
     # p.save()
@@ -50,10 +63,8 @@ def home(request):
                        relation['second_relative_id'],
                        label=str(relation['relation']))
 
-
-
     nt = Network(600, 1700)
-    nt.set_template("gentree\\templates\\template.html")
+    nt.set_template("gentree\\templates\\index.html")
     nt.from_nx(graph)
     nt.set_options("""var options = {
       "edges": {

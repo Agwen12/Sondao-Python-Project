@@ -154,30 +154,13 @@
     </div>
 </div>
 
-<!-- NEED FOR DJANGO-MODAL-FORMS -->
-<div class="modal fade" tabindex="-1" role="dialog" id="modal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content"></div>
-  </div>
-</div>
-
-<script type="text/javascript">
-  $(function () {
-    // Sign up button
-    $("#add-person-btn").modalForm({
-        formURL: "{% url 'add_person' %}"
-    });
-  });
-</script>
-<!-- END OF DJANGO TEMPLATE-->
-
 {% endif %}
 {% if conf %}
 <div id = "config"></div>
 {% endif %}
 
 <div style="position: center; padding-left: 500px; padding-right: 100px; margin-right: 100px">
-    <button id="add-person-btn" class="btn btn-primary" type="button" name="button">Add person</button>
+    <a type="button" class="button button1" href="">Add new person</a>
     <a type="button" class="button button1" href="">Remove person</a>
 
 </div>

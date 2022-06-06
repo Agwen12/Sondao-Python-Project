@@ -14,13 +14,10 @@ import datetime
 
 
 class PersonDeleteView(DeleteView):
-    # specify the model you want to use
+    template_name = 'person_confirm_delete.html'
     model = Person
-
-    # can specify success url
-    # url to redirect after successfully
-    # deleting object
     success_url = "/"
+
 
 class Index(TemplateView):
     template_name = "index.html"
@@ -39,6 +36,7 @@ class Index(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = PersonForm()
+        context['objects'] = Person.objects.all()
         return context
 
 

@@ -4,6 +4,7 @@ from sondao.logic.DocumentType import DocumentType
 from sondao.logic.RelationTypes import RelationTypes
 from django.contrib.auth.models import User
 
+
 class Person(models.Model):
     pesel_validator = RegexValidator(regex=r"\d{11}", message="Pesel must have 11 digits")
 
@@ -20,10 +21,12 @@ class Person(models.Model):
     supposed_death_notification = models.DateField("Person supposed date notification", null=True, blank=True)
     proxy = models.CharField("Juvenile proxy", null=True, max_length=60, blank=True)
     notes = models.TextField("Notes for person", null=True, blank=True)
-    receive_confirmation_place = models.CharField("Place of received confirmation", null=True, max_length=30, blank=True)
+    receive_confirmation_place = models.CharField("Place of received confirmation", null=True, max_length=30,
+                                                  blank=True)
 
     def __str__(self):
         return f"{self.name} {self.surname}"
+
 
 class Document(models.Model):
     doc_types = [(x.value, DocumentType(x.value)) for x in DocumentType]

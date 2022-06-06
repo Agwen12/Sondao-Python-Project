@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .models import Person, Relation
 from pyvis.network import Network
 from django.views.generic.base import TemplateView
+from django.views.generic.edit import DeleteView
 
 from .forms import PersonForm
 from .models import Person
@@ -12,8 +13,28 @@ import pyvis.network
 import datetime
 
 
+class PersonDeleteView(DeleteView):
+    # specify the model you want to use
+    model = Person
+
+    # can specify success url
+    # url to redirect after successfully
+    # deleting object
+    success_url = "/"
+
 class Index(TemplateView):
     template_name = "index.html"
+
+    def post(self, request, format=None):
+        form = PersonForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.name = form.cleaned_data['name']
+            post.surname = form.cleaned_data['surname']
+            post.save()
+
+        return HttpResponseRedirect('/')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

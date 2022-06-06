@@ -22,6 +22,8 @@ class Person(models.Model):
     notes = models.TextField("Notes for person", null=True, blank=True)
     receive_confirmation_place = models.CharField("Place of received confirmation", null=True, max_length=30, blank=True)
 
+    def __str__(self):
+        return f"{self.name} {self.surname}"
 
 class Document(models.Model):
     doc_types = [(x.value, DocumentType(x.value)) for x in DocumentType]

@@ -1,7 +1,9 @@
+
 from django.db import models
 from django.core.validators import RegexValidator
 from sondao.logic.DocumentType import DocumentType
 from sondao.logic.RelationTypes import RelationTypes
+
 
 
 class Person(models.Model):

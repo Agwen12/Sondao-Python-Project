@@ -1,3 +1,5 @@
+from pathlib import Path
+path = Path(__file__)
 from django.http import HttpResponse, HttpResponseRedirect
 from pyvis.network import Network
 from django.views.generic.base import TemplateView
@@ -125,9 +127,9 @@ def graph(request):
         dict(graph.nodes.data())[rel[1]]['level'] = level
 
     a = Algorithm(graph, persons, relation_dict, testator_id)
-
+    print("BEFORE =============================================================")
     a.find_heir()
-
+    print("AFTER =============================================================")
     nt = Network(600, 1700)
     nt.set_template(
         os.path.join(os.getcwd(), 'gentree', 'templates', 'pyvis_template.html'))

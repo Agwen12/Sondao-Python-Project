@@ -12,7 +12,7 @@ class Document:
 
 
 @dataclass
-class PersonalInfo:  # TODO WAIT FOR OTHER DOCS
+class PersonalInfo:
     name: str
     surname: str
     PESEL: str
@@ -20,7 +20,7 @@ class PersonalInfo:  # TODO WAIT FOR OTHER DOCS
     home_address: str
     birthday: date
     documents: dict[DocumentType: Document] = field(default_factory=lambda: dict.fromkeys(list(DocumentType)))
-    proxy: str = None  # pelnomocnik dla dzieciaka
+    proxy: str = None  # pelnomocnik dla dziecka
     notes: str = None
     receive_confirmation_place: str = None
 

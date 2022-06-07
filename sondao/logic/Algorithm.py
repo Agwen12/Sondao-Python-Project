@@ -1,13 +1,10 @@
 import networkx as nx
-from typing import List, Dict, Optional
-# from sondao.GUI.sondao_web.gentree.models import Person, Relation
-from sondao.logic.RelationTypes import RelationTypes
+from typing import Optional
 from sondao.logic.Person import Person
-import functools as ft
 
 
 class Algorithm:
-    def __init__(self, tree: nx.Graph, persons: List[Person], relation_dict: dict, testator_id: int):
+    def __init__(self, tree: nx.Graph, persons: list[Person], relation_dict: dict, testator_id: int):
         self.tree = tree
         self.persons = persons
         self.relation_dict = relation_dict
@@ -35,9 +32,7 @@ class Algorithm:
 
         print(self.inheritees)
 
-
     def distibute_wealth(self, wealth: float, *args):
-
         the_truth = []
         inheritees = [person for sublist in args for person in sublist]
         if wealth == 0:
@@ -48,10 +43,8 @@ class Algorithm:
             return None
         equal_part = wealth / len(inheritees)
         for inheritee in inheritees:
-            # print(inheritee.personal_info.name, inheritee.personal_info.surname)
             if inheritee.personal_info.can_inherit():
 
-                # print(f"[INFO] {inheritee.personal_info.name} {inheritee.personal_info.surname} has inherited {equal_part} of money $$$$$")
                 the_truth.append((inheritee.personal_info.name, inheritee.personal_info.surname))
                 self.set_color(inheritee, "green")
             else:
@@ -63,11 +56,9 @@ class Algorithm:
         return wealth, the_truth if len(the_truth) > 0 else None
 
     def money_money(self):
-        """"""
+        pass
 
     def get_person_obj(self, node) -> Optional[Person]:
-        # level = dict(graph.nodes.data())[rel[0]]['level']
-        # sc_person_id = dict(graph.nodes.data())[relation['second_relative_id']]['person']
         if node in dict(self.tree.nodes.data()):
             return self.persons[dict(self.tree.nodes.data())[node]['person']]
 

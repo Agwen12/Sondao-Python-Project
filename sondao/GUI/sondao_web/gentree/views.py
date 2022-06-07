@@ -1,6 +1,3 @@
-from pathlib import Path
-
-path = Path(__file__)
 from django.http import HttpResponse, HttpResponseRedirect
 from pyvis.network import Network
 from django.views.generic.base import TemplateView, View
@@ -111,8 +108,8 @@ class GraphView(View):
             self.relation_dict[(relation['first_relative_id'], relation['second_relative_id'])] = rel
             self.relation_dict[(relation['second_relative_id']), relation['first_relative_id']] = rel.opposite()
             self.graph.add_edge(relation['first_relative_id'],
-                           relation['second_relative_id'],
-                           label=str(rel))
+                                relation['second_relative_id'],
+                                label=str(rel))
 
     def _set_levels(self):
         for edge_info in nx.bfs_edges(self.graph, self.testator_id):

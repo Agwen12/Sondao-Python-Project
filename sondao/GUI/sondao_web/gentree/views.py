@@ -161,5 +161,4 @@ def graph(request):
       }
     }""")
     out = nt.generate_html()
-    print(out)
     return HttpResponse(out)

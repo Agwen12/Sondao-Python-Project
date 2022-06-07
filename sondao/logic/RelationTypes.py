@@ -28,9 +28,6 @@ class RelationTypes(Enum):
 
     @staticmethod
     def from_string(relation: str):
-        # TODO all possibilities
-        # print(type(relation))
-        # print(relation)
         match relation:
             case "SIBLING":
                 return RelationTypes.SIBLING
@@ -40,15 +37,3 @@ class RelationTypes(Enum):
                 return RelationTypes.PARENT
             case "SPOUSE":
                 return RelationTypes.SPOUSE
-
-# CHILD
-# SIBLING
-# CHILD
-# PARENT
-
-
-# definie niezwłocznie
-# data wpływu
-# prawomocnosci
-# zwrócenei się o odpisa prawomocny
-# data doręcznia

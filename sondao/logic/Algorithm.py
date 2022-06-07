@@ -15,11 +15,6 @@ class Algorithm:
         self.inheritees = []
 
     def find_heir(self):
-        """
-
-        :return:
-        """
-
         print("CHILDREN", list(map(lambda x: f"{x.personal_info.name} {x.personal_info.surname}",
                                    self.testator.children)))
         print("PARENTS", list(map(lambda x: f"{x.personal_info.name} {x.personal_info.surname}",

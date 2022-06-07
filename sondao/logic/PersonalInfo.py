@@ -20,11 +20,9 @@ class PersonalInfo:  # TODO WAIT FOR OTHER DOCS
     home_address: str
     birthday: date
     documents: dict[DocumentType: Document] = field(default_factory=lambda: dict.fromkeys(list(DocumentType)))
-    proxy: str = None # pelnomocnik dla dzieciaka
+    proxy: str = None  # pelnomocnik dla dzieciaka
     notes: str = None
     receive_confirmation_place: str = None
-
-
 
 
 @dataclass
@@ -33,9 +31,6 @@ class RelativesInfo(PersonalInfo):
     supposed_death_notification: date = None
 
     def can_inherit(self) -> bool:
-        # print(self.documents[DocumentType.DEATH_CERTIFICATE], self.want_inherit)
-        val = self.documents[DocumentType.DEATH_CERTIFICATE] is None and\
-               self.documents[DocumentType.INHERITANCE_REJECTION] is None and\
+        return self.documents[DocumentType.DEATH_CERTIFICATE] is None and \
+               self.documents[DocumentType.INHERITANCE_REJECTION] is None and \
                self.want_inherit
-        # print(val)
-        return val

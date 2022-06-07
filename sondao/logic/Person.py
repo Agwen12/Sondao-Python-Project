@@ -1,21 +1,20 @@
+from sondao.logic.PersonalInfo import PersonalInfo
+from sondao.logic.RelationTypes import RelationTypes
 from dataclasses import dataclass, field
-from typing import TypeVar
 from abc import ABC, abstractmethod
 from collections import namedtuple
-
-from sondao.logic.PersonalInfo import PersonalInfo
-from sondao.logic.RelationTypes import RelationTypes as RT
+from typing import TypeVar
 
 PersonObject = TypeVar("PersonObject")
 Spouse = namedtuple("Spouse", ["person", "relation"])
 
-#TODO TYPEVAR NIE MA SENSU UZYC KALSY KTORA NIC NIE ROBI. MOZNA TEZ ZREZYGNOWAC Z TYPINGU TUTAJ TYPOWO
+
 @dataclass
 class GenericPerson(ABC):
     personal_info: PersonalInfo
 
     @abstractmethod
-    def add_relative(self, relative: PersonObject, relation_type: RT):
+    def add_relative(self, relative: PersonObject, relation_type: RelationTypes):
         pass
 
 
@@ -26,18 +25,17 @@ class Person(GenericPerson):
     siblings: list[GenericPerson] = field(default_factory=lambda: list())
     parents: list[GenericPerson] = field(default_factory=lambda: list())
 
-
-    def add_relative(self, relative: PersonObject, relation_type: RT):
+    def add_relative(self, relative: PersonObject, relation_type: RelationTypes):
         match relation_type:
-            case RT.CHILD | RT.FULL_ADOPTED_CHILD | RT.PARTIAL_ADOPTED_CHILD:
+            case RelationTypes.CHILD | RelationTypes.FULL_ADOPTED_CHILD | RelationTypes.PARTIAL_ADOPTED_CHILD:
                 self.children.append(relative)
                 relative.parents.append(self)
                 return True
-            case RT.SIBLING:
+            case RelationTypes.SIBLING:
                 self.siblings.append(relative)
                 relative.siblings.append(self)
                 return True
-            case RT.PARENT:
+            case RelationTypes.PARENT:
                 self.parents.append(relative)
                 relative.children.append(self)
                 return True
@@ -49,14 +47,11 @@ class Person(GenericPerson):
 class Testator(Person):
     spouse: list[Person] = field(default_factory=lambda: list())
 
-    def add_relative(self, relative: Person, relation_type: RT):
+    def add_relative(self, relative: Person, relation_type: RelationTypes):
         if not super().add_relative(relative, relation_type):
-
             self.spouse.append(relative)
 
 
 @dataclass
 class Relative(Person):
     pass
-    # mail_sent: date = None
-    # mail_received: date = None

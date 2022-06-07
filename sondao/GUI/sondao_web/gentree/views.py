@@ -5,7 +5,7 @@ from django.views.generic.edit import DeleteView
 from sondao.logic.Person import Person as LPerson
 from sondao.logic.PersonalInfo import PersonalInfo, RelativesInfo
 from sondao.logic.RelationTypes import RelationTypes as RT
-
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 from .forms import PersonForm
 from .models import Person
 from sondao.logic.Algorithm import Algorithm
@@ -13,7 +13,7 @@ from sondao.logic.Algorithm import Algorithm
 from .forms import PersonForm, RelationFrom, DocumentForm
 from .models import Person, Relation, Document
 import networkx as nx
-
+import os
 
 class GeneralDeleteView(DeleteView):
     template_name = 'confirm_delete.html'
@@ -55,8 +55,8 @@ class Index(TemplateView):
         context['document_objects'] = Document.objects.all()
         return context
 
-
-def home(request):
+@xframe_options_sameorigin
+def graph(request):
     menager = Person.objects
     items = menager.all()
     graph = nx.Graph()
@@ -141,7 +141,7 @@ def home(request):
 
     nt = Network(600, 1700)
     nt.set_template(
-        "D:\\sem4\\PYTHON\\Sondao-Python-Project\\sondao\\GUI\\sondao_web\\gentree\\templates\\template.html")
+        os.path.join(os.getcwd(), 'gentree', 'templates', 'pyvis_template.html'))
     nt.from_nx(graph)
     nt.set_options("""var options = {
       "edges": {
@@ -172,4 +172,5 @@ def home(request):
       }
     }""")
     out = nt.generate_html()
+    print(out)
     return HttpResponse(out)

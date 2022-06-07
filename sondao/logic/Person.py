@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
 from typing import TypeVar
-from datetime import date
 from abc import ABC, abstractmethod
 from collections import namedtuple
 
@@ -30,7 +29,7 @@ class Person(GenericPerson):
         match relation_type:
             case RT.CHILD | RT.FULL_ADOPTED_CHILD | RT.PARTIAL_ADOPTED_CHILD:
                 self.children.append(relative)
-                relative.parent.append(self)
+                relative.parents.append(self)
                 return True
             case RT.SIBLING:
                 self.siblings.append(relative)

@@ -19,7 +19,7 @@ class PersonalInfo:  # TODO WAIT FOR OTHER DOCS
     phone_number: str
     home_address: str
     birthday: date
-    documents: dict[DocumentType: Document] = field(default_factory=lambda: dict.fromkeys(list(DocumentType))) #TODO LISTA MOZE, NP 2 akty slubu
+    documents: dict[DocumentType: Document] = field(default_factory=lambda: dict.fromkeys(list(DocumentType)))
     proxy: str = None # pelnomocnik dla dzieciaka
     notes: str = None
     receive_confirmation_place: str = None

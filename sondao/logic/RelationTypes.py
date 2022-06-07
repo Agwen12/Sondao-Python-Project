@@ -38,6 +38,8 @@ class RelationTypes(Enum):
                 return RelationTypes.CHILD
             case "PARENT":
                 return RelationTypes.PARENT
+            case "SPOUSE":
+                return RelationTypes.SPOUSE
 
 # CHILD
 # SIBLING

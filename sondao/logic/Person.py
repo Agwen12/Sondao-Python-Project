@@ -21,9 +21,11 @@ class GenericPerson(ABC):
 
 @dataclass
 class Person(GenericPerson):
+    internal_id: int
     children: list[GenericPerson] = field(default_factory=lambda: list())
     siblings: list[GenericPerson] = field(default_factory=lambda: list())
     parents: list[GenericPerson] = field(default_factory=lambda: list())
+
 
     def add_relative(self, relative: PersonObject, relation_type: RT):
         match relation_type:
@@ -45,11 +47,12 @@ class Person(GenericPerson):
 
 @dataclass
 class Testator(Person):
-    spouse: list[Spouse] = field(default_factory=lambda: list())
+    spouse: list[Person] = field(default_factory=lambda: list())
 
     def add_relative(self, relative: Person, relation_type: RT):
         if not super().add_relative(relative, relation_type):
-            self.spouse.append(Spouse(relative, relation_type))
+
+            self.spouse.append(relative)
 
 
 @dataclass

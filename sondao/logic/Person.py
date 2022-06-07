@@ -4,8 +4,8 @@ from datetime import date
 from abc import ABC, abstractmethod
 from collections import namedtuple
 
-from PersonalInfo import PersonalInfo
-from RelationTypes import RelationTypes as RT
+from sondao.logic.PersonalInfo import PersonalInfo
+from sondao.logic.RelationTypes import RelationTypes as RT
 
 PersonObject = TypeVar("PersonObject")
 Spouse = namedtuple("Spouse", ["person", "relation"])

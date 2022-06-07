@@ -16,7 +16,7 @@ class Person(models.Model):
     birthday = models.DateField("Person birthday", null=True, blank=True)
     is_testator = models.BooleanField("Is person a testator", default=False)
     death_date = models.DateField("Person death date", null=True, blank=True)
-    want_inherit = models.BooleanField("Is person eager to inherit", default=False)
+    want_inherit = models.BooleanField("Is person eager to inherit", default=True)
     supposed_death_notification = models.DateField("Person supposed date notification", null=True, blank=True)
     proxy = models.CharField("Juvenile proxy", null=True, max_length=60, blank=True)
     notes = models.TextField("Notes for person", null=True, blank=True)

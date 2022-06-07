@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import date
-from DocumentType import DocumentType
+from sondao.logic.DocumentType import DocumentType
 
 
 @dataclass
@@ -25,6 +25,7 @@ class PersonalInfo:  # TODO WAIT FOR OTHER DOCS
     receive_confirmation_place: str = None
 
 
+@dataclass
 class RelativesInfo(PersonalInfo):
     want_inherit: bool = True
     supposed_death_notification: date = None

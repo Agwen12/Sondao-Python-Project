@@ -1,33 +1,33 @@
 {% load crispy_forms_tags %}
 
-<!-- Button trigger modal -->
-
-<div class="text-center">
-<button type="button" class="btn btn-success rounded" data-toggle="modal" data-target="#addPersonModal">
-  Add Person
-</button>
-
-<button type="button" class="btn btn-success rounded" data-toggle="modal" data-target="#AddRelationModal">
-  Add Relation
-</button>
-
-<button type="button" class="btn btn-success rounded" data-toggle="modal" data-target="#AddDocumentModal">
-  Add Document
-</button>
-
-<button type="button" class="btn btn-danger rounded" data-toggle="modal" data-target="#removePersonModal">
-  Remove Person
-</button>
-
-<button type="button" class="btn btn-danger rounded" data-toggle="modal" data-target="#removeRelationModal">
-  Remove Relation
-</button>
-
-<button type="button" class="btn btn-danger rounded" data-toggle="modal" data-target="#removeDocumentModal">
-  Remove Document
-</button>
-</div>
-
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Sondao</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" data-target="#addPersonModal">Add person</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" data-target="#AddRelationModal">Add relation</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" data-target="#AddDocumentModal">Add Document</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" data-target="#removePersonModal">Remove person</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" data-target="#removeRelationModal">Remove relation</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" data-target="#removeDocumentModal">Remove Document</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
 <div class="modal fade" id="addPersonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

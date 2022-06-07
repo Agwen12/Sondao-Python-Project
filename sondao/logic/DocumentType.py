@@ -1,9 +1,13 @@
-from enum import Enum, auto
+from enum import Enum
 
-#TODO DO PRZEMYSLENIA, MOZE ZREZYGNOWAC Z ENUMA I ROBIC STRINGI
-class DocumentType(Enum):  # TODO WAIT FOR INFO ABOUT OTHER
-    DEATH_CERTIFICATE = auto()
-    BIRTH_CERTIFICATE = auto()
-    MARRIAGE_CERTIFICATE = auto()
-    INHERITANCE_REJECTION = auto()
-    OTHER = auto()
+
+class DocumentType(Enum):
+    DEATH_CERTIFICATE = "Death certificate"
+    BIRTH_CERTIFICATE = "Birth certificate"
+    MARRIAGE_CERTIFICATE = "Marriage certificate"
+    INHERITANCE_REJECTION = "Inheritance rejection"
+    OTHER = "Other"
+
+    @classmethod
+    def choices(cls):
+        return tuple((i.name, i.value) for i in cls)

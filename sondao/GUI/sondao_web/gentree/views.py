@@ -107,21 +107,34 @@ def home(request):
         persons.append(person)
     relations = Relation.objects.order_by('first_relative').all()
     for relation in relations.values():
-        relation_dict[(relation['first_relative_id'], relation['second_relative_id'])] = RT.from_string(relation['relation'])
-        relation_dict[(relation['second_relative_id']), relation['first_relative_id']] = RT.from_string(relation['relation']).opposite()
+        rel = RT.from_string(relation['relation'])
+        person_id = dict(graph.nodes.data())[relation['first_relative_id']]['person']
+        sc_person_id = dict(graph.nodes.data())[relation['second_relative_id']]['person']
+        persons[sc_person_id].add_relative(persons[person_id], rel)
+        relation_dict[(relation['first_relative_id'], relation['second_relative_id'])] = rel
+        relation_dict[(relation['second_relative_id']), relation['first_relative_id']] = rel.opposite()
         graph.add_edge(relation['first_relative_id'],
                        relation['second_relative_id'],
                        label=str(relation['relation']))
 
     T = nx.bfs_edges(graph, testator_id)
-    # print(list(T))
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n\n")
+    for b in graph.nodes.data():
+        # print(b)
+        print(persons[b[1]['person']].personal_info.name, persons[b[1]['person']].personal_info.surname)
+        print("childern", list(map(lambda x: f"{x.personal_info.name} {x.personal_info.surname}", persons[b[1]['person']].children)))
+        print("parents", list(map(lambda x: f"{x.personal_info.name} {x.personal_info.surname}", persons[b[1]['person']].parents)))
+        print("siblings", list(map(lambda x: f"{x.personal_info.name} {x.personal_info.surname}", persons[b[1]['person']].siblings)))
+        print("#====================================================#")
+
+    print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\n\n")
     a = list(T)
     # print(graph.edges)
     print(relation_dict)
-    print(a)
+    # print(a)
     for rel in a:
-        print(rel, relation_dict[rel])
-        print("LEVEL ", dict(graph.nodes.data())[rel[0]]['level'])
+        # print(rel, relation_dict[rel])
+        # print("LEVEL ", dict(graph.nodes.data())[rel[0]]['level'])
         level = dict(graph.nodes.data())[rel[0]]['level']
         match relation_dict[rel]:
             case RT.CHILD | RT.FULL_ADOPTED_CHILD | RT.PARTIAL_ADOPTED_CHILD:

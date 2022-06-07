@@ -1,63 +1,51 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
-from .models import Person, Relation
 from pyvis.network import Network
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import DeleteView
-
-from .forms import PersonForm
-from .models import Person
-
+from .forms import PersonForm, RelationFrom, DocumentForm
+from .models import Person, Relation, Document
 import networkx as nx
-import pyvis.network
-import datetime
 
 
-class PersonDeleteView(DeleteView):
-    template_name = 'person_confirm_delete.html'
-    model = Person
+class GeneralDeleteView(DeleteView):
+    template_name = 'confirm_delete.html'
     success_url = "/"
+
+
+class PersonDeleteView(GeneralDeleteView):
+    model = Person
+
+
+class RelationDeleteView(GeneralDeleteView):
+    model = Relation
+
+
+class DocumentDeleteView(GeneralDeleteView):
+    model = Document
 
 
 class Index(TemplateView):
     template_name = "index.html"
 
-    def post(self, request, format=None):
-        form = PersonForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.name = form.cleaned_data['name']
-            post.surname = form.cleaned_data['surname']
-            post.save()
+    def post(self, request):
+        forms = (form(request.POST) for form in [PersonForm, RelationFrom, DocumentForm])
+
+        for form in forms:
+            if form.is_valid():
+                form.save()
+                break
 
         return HttpResponseRedirect('/')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = PersonForm()
-        context['objects'] = Person.objects.all()
+        context['person_form'] = PersonForm()
+        context['person_objects'] = Person.objects.all()
+        context['relation_form'] = RelationFrom()
+        context['relation_objects'] = Relation.objects.all()
+        context['document_form'] = DocumentForm()
+        context['document_objects'] = Document.objects.all()
         return context
-
-
-def person_form(request):
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = PersonForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.name = form.cleaned_data['name']
-            post.surname = form.cleaned_data['surname']
-            post.save()
-            return HttpResponseRedirect('/')
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = PersonForm()
-
-    return render(request, '/', {'form': form})
 
 
 def home(request):
@@ -74,7 +62,6 @@ def home(request):
     # p.save()
     relations = Relation.objects.order_by('first_relative').all()
     for relation in relations.values():
-        # print(relation)
         graph.add_edge(relation['first_relative_id'],
                        relation['second_relative_id'],
                        label=str(relation['relation']))

@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from pyvis.network import Network
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import DeleteView
-from sondao.logic.Person import Person as LPerson
+from sondao.logic.Person import Person as LPerson, Testator
 from sondao.logic.PersonalInfo import PersonalInfo, RelativesInfo
 from sondao.logic.RelationTypes import RelationTypes as RT
 
@@ -73,6 +73,7 @@ def home(request):
                 receive_confirmation_place=item['receive_confirmation_place']
             )
             testator_id = item['id']
+            person = Testator(personal_info=personal_info, internal_id=item['id'])
         else:
             personal_info = RelativesInfo(
                 name=item['name'], surname=item['surname'], PESEL=item['pesel'],
@@ -81,9 +82,9 @@ def home(request):
                 receive_confirmation_place=item['receive_confirmation_place'],
                 want_inherit=item['want_inherit'],
                 supposed_death_notification=item['supposed_death_notification']
-            )
 
-        person = LPerson(personal_info=personal_info)
+            )
+            person = LPerson(personal_info=personal_info, internal_id=item['id'])
 
         graph.add_node(item['id'],
                        label=f"{item['name']} {item['surname']}",
@@ -91,7 +92,7 @@ def home(request):
                        shape="box",
                        person=len(persons),
                        level=2 if item['is_testator'] else None,
-                       color='yellow' if item['is_testator'] else None
+                       color='yellow' if item['is_testator'] else None,
                        )
         persons.append(person)
     relations = Relation.objects.order_by('first_relative').all()
@@ -99,31 +100,19 @@ def home(request):
         rel = RT.from_string(relation['relation'])
         person_id = dict(graph.nodes.data())[relation['first_relative_id']]['person']
         sc_person_id = dict(graph.nodes.data())[relation['second_relative_id']]['person']
-        persons[sc_person_id].add_relative(persons[person_id], rel)
+        if rel == RT.SPOUSE:
+            persons[person_id].add_relative(persons[sc_person_id], rel)
+        else:
+            persons[sc_person_id].add_relative(persons[person_id], rel)
         relation_dict[(relation['first_relative_id'], relation['second_relative_id'])] = rel
         relation_dict[(relation['second_relative_id']), relation['first_relative_id']] = rel.opposite()
         graph.add_edge(relation['first_relative_id'],
                        relation['second_relative_id'],
-                       label=str(relation['relation']))
+                       label=str(rel))
 
     T = nx.bfs_edges(graph, testator_id)
-    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n\n")
-    for b in graph.nodes.data():
-        # print(b)
-        print(persons[b[1]['person']].personal_info.name, persons[b[1]['person']].personal_info.surname)
-        print("childern", list(map(lambda x: f"{x.personal_info.name} {x.personal_info.surname}", persons[b[1]['person']].children)))
-        print("parents", list(map(lambda x: f"{x.personal_info.name} {x.personal_info.surname}", persons[b[1]['person']].parents)))
-        print("siblings", list(map(lambda x: f"{x.personal_info.name} {x.personal_info.surname}", persons[b[1]['person']].siblings)))
-        print("#====================================================#")
-
-    print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\n\n")
     a = list(T)
-    # print(graph.edges)
-    print(relation_dict)
-    # print(a)
     for rel in a:
-        # print(rel, relation_dict[rel])
-        # print("LEVEL ", dict(graph.nodes.data())[rel[0]]['level'])
         level = dict(graph.nodes.data())[rel[0]]['level']
         match relation_dict[rel]:
             case RT.CHILD | RT.FULL_ADOPTED_CHILD | RT.PARTIAL_ADOPTED_CHILD:
@@ -135,7 +124,7 @@ def home(request):
 
         dict(graph.nodes.data())[rel[1]]['level'] = level
 
-    a = Algorithm()
+    a = Algorithm(graph, persons, relation_dict, testator_id)
 
     a.find_heir()
 
@@ -150,7 +139,7 @@ def home(request):
             "type": "arrow"
           },
         "color": {
-          "inherit": true
+          "inherit": false
         },
         "smooth": false
       },

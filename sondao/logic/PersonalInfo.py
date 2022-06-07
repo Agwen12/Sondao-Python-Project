@@ -25,7 +25,17 @@ class PersonalInfo:  # TODO WAIT FOR OTHER DOCS
     receive_confirmation_place: str = None
 
 
+
+
 @dataclass
 class RelativesInfo(PersonalInfo):
     want_inherit: bool = True
     supposed_death_notification: date = None
+
+    def can_inherit(self) -> bool:
+        # print(self.documents[DocumentType.DEATH_CERTIFICATE], self.want_inherit)
+        val = self.documents[DocumentType.DEATH_CERTIFICATE] is None and\
+               self.documents[DocumentType.INHERITANCE_REJECTION] is None and\
+               self.want_inherit
+        # print(val)
+        return val

@@ -27,14 +27,14 @@ class Person(models.Model):
 
 
 class Document(models.Model):
-    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    person_id = models.ForeignKey(Person, on_delete=models.CASCADE)
     type = models.CharField("Document type", max_length=30, choices=DocumentType.choices())
     code = models.CharField("Document code", max_length=30)
     note = models.CharField("Document notes", max_length=30)
     date = models.DateField("Document date", null=True, blank=True)
 
     def __str__(self):
-        return f"{self.type} of {self.person}"
+        return f"{self.type} of {self.person_id}"
 
 
 class Relation(models.Model):

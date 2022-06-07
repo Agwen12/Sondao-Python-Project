@@ -22,31 +22,19 @@ class Person(models.Model):
     receive_confirmation_place = models.CharField("Place of received confirmation", null=True, max_length=30,
                                                   blank=True)
 
-    def __repr__(self):
-        return f"{self.name} {self.surname} [{'not ' if not self.is_testator else ''}testator]"
-
-    def get_relatives_pk(self):
-        relatives_pk = list()
-        objects = Relation.objects.filter(first_relative=self.pk).values()
-        for obj in objects:
-            relatives_pk.append(obj['pk'])
-
-        objects = Relation.objects.filter(second_relative=self.pk).values()
-        for obj in objects:
-            relatives_pk.append(obj['pk'])
-
-        return relatives_pk
+    def __str__(self):
+        return f"{self.name} {self.surname}{' (testator)' if self.is_testator else ''}"
 
 
 class Document(models.Model):
-    person_id = models.ForeignKey(Person, on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
     type = models.CharField("Document type", max_length=30, choices=DocumentType.choices())
     code = models.CharField("Document code", max_length=30)
     note = models.CharField("Document notes", max_length=30)
     date = models.DateField("Document date", null=True, blank=True)
 
-    def __repr__(self):
-        return f"{self.type} of {str(Person.objects.get(pk=self.person_id))}"
+    def __str__(self):
+        return f"{self.type} of {self.person}"
 
 
 class Relation(models.Model):
@@ -54,7 +42,5 @@ class Relation(models.Model):
     second_relative = models.ForeignKey(Person, on_delete=models.CASCADE, related_name="second_relative")
     relation = models.CharField("Relation type", max_length=30, choices=RelationTypes.choices())
 
-    def __repr__(self):
-        second_relative = Person.objects.get(pk=self.second_relative)
-        first_relative = Person.objects.get(pk=self.first_relative)
-        return f"{second_relative} is {self.type} for {first_relative}"
+    def __str__(self):
+        return f"{self.second_relative} is {self.relation} for {self.first_relative}"

@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include "_modals.html" %}
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe id="encoder_iframe" height=75% width="50%" src="{% url 'graph' %}"></iframe>
+</div>
+{% endblock %}

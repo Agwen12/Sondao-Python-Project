@@ -172,7 +172,8 @@ class GraphView(View):
               "levelSeparation": 200,
               "nodeSpacing": 100,
               "direction": "UD",
-              "sortMethod": "directed"
+              "sortMethod": "directed",
+              "parentCentralization": true
             }
           },
           "physics": {

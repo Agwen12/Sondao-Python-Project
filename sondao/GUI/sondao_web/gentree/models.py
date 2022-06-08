@@ -43,4 +43,4 @@ class Relation(models.Model):
     relation = models.CharField("Relation type", max_length=30, choices=RelationTypes.choices())
 
     def __str__(self):
-        return f"{self.second_relative} is {self.relation} for {self.first_relative}"
+        return f"{self.first_relative} is {self.relation.lower()} for {self.second_relative}"

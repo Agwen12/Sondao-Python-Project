@@ -1,14 +1,14 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from pyvis.network import Network
 from django.views.generic.base import TemplateView, View
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import DeleteView, UpdateView
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 from sondao.logic.Person import Person as LPerson, Testator
 from sondao.logic.PersonalInfo import PersonalInfo, RelativesInfo
 from sondao.logic.RelationTypes import RelationTypes
-from django.views.decorators.clickjacking import xframe_options_sameorigin
 from sondao.logic.Algorithm import Algorithm
 from .forms import PersonForm, RelationFrom, DocumentForm
 from .models import Person, Relation, Document
+from pyvis.network import Network
 import networkx as nx
 import os
 
@@ -33,12 +33,33 @@ class DocumentDeleteView(GeneralDeleteView):
     model = Document
 
 
+class GeneralUpdateView(UpdateView):
+    template_name = 'update_form.html'
+    success_url = "/"
+    fields = '__all__'
+
+    class Meta:
+        abstract = True
+
+
+class PersonUpdateView(GeneralUpdateView):
+    model = Person
+
+
+class RelationUpdateView(GeneralUpdateView):
+    model = Relation
+
+
+class DocumentUpdateView(GeneralUpdateView):
+    model = Document
+
+
 class Index(TemplateView):
     template_name = "index.html"
 
     @staticmethod
     def post(request):
-        forms = (form(request.POST) for form in [PersonForm, RelationFrom, DocumentForm])
+        forms = (form(request.POST) for form in (PersonForm, RelationFrom, DocumentForm))
 
         for form in forms:
             if form.is_valid():

@@ -14,19 +14,20 @@
         <a class="nav-link" data-toggle="modal" data-target="#AddRelationModal">Add relation</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="modal" data-target="#AddDocumentModal">Add Document</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="modal" data-target="#removePersonModal">Remove person</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="modal" data-target="#removeRelationModal">Remove relation</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="modal" data-target="#removeDocumentModal">Remove Document</a>
+        <a class="nav-link" data-toggle="modal" data-target="#AddDocumentModal">Add document</a>
       </li>
     </ul>
-  </div>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" data-target="#managePersonModal">Manage persons</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" data-target="#manageRelationModal">Manage relations</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" data-target="#manageDocumentModal">Manage documents</a>
+      </li>
+    </ul>
 </nav>
 
 <div class="modal fade" id="addPersonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -49,18 +50,23 @@
   </div>
 </div>
 
-<div class="modal hide fade" id="removePersonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
+<div class="modal hide fade" id="managePersonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="removePersonModalLabel">Remove person</h5>
+        <h5 class="modal-title" id="managePersonModalLabel">Manage persons</h5>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       </div>
       <div class="modal-body">
         <div class="list-group">
-          {% csrf_token %}
           {% for object in person_objects %}
-            <a href="{{object.pk}}/delete_person/" class="list-group-item list-group-item-action">{{object}}</a>
+          <div class="list-group-item list-group-item-action">
+            <div class="d-flex">
+              <div class="mr-auto p-2">{{object}}</div>
+              <div class="p-2"><a type="button" class="btn btn-info" href="{{object.pk}}/update_person/">UPDATE</a></div>
+              <div class="p-2"><a type="button" class="btn btn-danger" href="{{object.pk}}/delete_person/">DELETE</a></div>
+            </div>
+          </div>
           {% endfor %}
         </div>
       </div>
@@ -88,18 +94,23 @@
   </div>
 </div>
 
-<div class="modal hide fade" id="removeRelationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
+<div class="modal hide fade" id="manageRelationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="removeRelationModalLabel">Remove relation</h5>
+        <h5 class="modal-title" id="manageRelationModalLabel">Manage relations</h5>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       </div>
       <div class="modal-body">
         <div class="list-group">
-          {% csrf_token %}
           {% for object in relation_objects %}
-            <a href="{{object.pk}}/delete_relation/" class="list-group-item list-group-item-action">{{object}}</a>
+          <div class="list-group-item list-group-item-action">
+            <div class="d-flex">
+              <div class="mr-auto p-2">{{object}}</div>
+              <div class="p-2"><a type="button" class="btn btn-info" href="{{object.pk}}/update_relation/">UPDATE</a></div>
+              <div class="p-2"><a type="button" class="btn btn-danger" href="{{object.pk}}/delete_relation/">DELETE</a></div>
+            </div>
+          </div>
           {% endfor %}
         </div>
       </div>
@@ -127,18 +138,23 @@
   </div>
 </div>
 
-<div class="modal hide fade" id="removeDocumentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
+<div class="modal hide fade" id="manageDocumentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="removeDocumentModalLabel">Remove document</h5>
+        <h5 class="modal-title" id="manageDocumentModalLabel">Manage documents</h5>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       </div>
       <div class="modal-body">
         <div class="list-group">
-          {% csrf_token %}
           {% for object in document_objects %}
-            <a href="{{object.pk}}/delete_document/" class="list-group-item list-group-item-action">{{object}}</a>
+          <div class="list-group-item list-group-item-action">
+            <div class="d-flex">
+              <div class="mr-auto p-2">{{object}}</div>
+              <div class="p-2"><a type="button" class="btn btn-info" href="{{object.pk}}/update_document/">UPDATE</a></div>
+              <div class="p-2"><a type="button" class="btn btn-danger" href="{{object.pk}}/delete_document/">DELETE</a></div>
+            </div>
+          </div>
           {% endfor %}
         </div>
       </div>

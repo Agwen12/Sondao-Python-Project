@@ -1,8 +1,6 @@
-# Sondao-Python-Project
+# Sondao
 
-## TIMELINE
-1. Logic -> be able to create nodes with info and relations   08.04.2022
-2. GUI -> display nodes                                       22.04.2022
-3. Integration -> interactiity in high level                  06.05.2022
-4. Saving and Importing (+ presentation)                      20.05.2022
-5. (IF NEEEDED) bug solving                                   03.06.2022
+Sondao allows you to create and custom family trees. Its primary purpose is to support legal operations regarding inheritance. 
+Although currently the app supports only a few cases of possible tree layouts but updates are planned in the hope of covering articles provided by KC ("Kodeks Cywilny").
+
+![sondao](https://user-images.githubusercontent.com/45673406/175116662-00c578d9-7923-4b41-a1e1-0c4b1f670eda.png)
